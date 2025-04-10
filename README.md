@@ -52,7 +52,7 @@ psql postgres
 Once you're in the PostgreSQL prompt (starting with `postgres=#`), run the following SQL command:
 
 ```
-CREATE USER user WITH PASSWORD '<create-a-password>';
+CREATE USER admin WITH PASSWORD '<create-a-password>';
 ```
 
 Create a `todos` database and give the user all privileges:
@@ -62,12 +62,18 @@ CREATE DATABASE todos;
 GRANT ALL PRIVILEGES ON DATABASE todos TO admin;
 ```
 
-Exit the `postgres` terminal by entering `/q`. 
+Exit the `postgres` terminal by entering `\q`. 
+
+Create a `.env` file in the root directory and add the following PostgreSQL connection string to it:
+
+```
+ConnectionStrings__DefaultConnection='Host=localhost;Database=todos;Username=admin;Password=<your-password>'
+```
 
 Run a migration to create a "TodoItems" table using the C# model in `Models/TodoItem`:
 
 ```bash
-dotnet ef migrations add InitialCreate
+dotnet tool install --global dotnet-ef
 dotnet ef database update
 ```
 
@@ -75,6 +81,12 @@ Connect to the database again:
 
 ```bash
 psql postgres
+```
+
+Connect to the todos database:
+
+```sql
+\c todos
 ```
 
 Populate the "TodoItems" table with some to-dos:
@@ -88,7 +100,7 @@ INSERT INTO "TodoItems" ("Title", "IsDone") VALUES
     ('Write documentation', false);
 ```
 
-Run the server:
+Exit the `postgres` terminal with `\q` and run the .NET server:
 
 ```bash
 dotnet run
