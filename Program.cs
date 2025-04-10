@@ -4,7 +4,7 @@ using TodoApi.Data;
 DotNetEnv.Env.Load(); // Load .env file
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseSentry();
+
 
 builder.Configuration
     .SetBasePath(builder.Environment.ContentRootPath)

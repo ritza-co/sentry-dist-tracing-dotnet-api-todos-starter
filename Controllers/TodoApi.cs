@@ -34,7 +34,6 @@ namespace todo_api.Controllers
         }
         catch (Exception ex)
         {
-            SentrySdk.CaptureException(ex);
             throw;
         }
     }
